@@ -18,8 +18,6 @@ A lightweight crosshair overlay tool for Windows. Customise your crosshair once,
 - **Profile Management** - Save, load, and delete named crosshair profiles; export and import as JSON files
 - **Auto-Save** - Every setting change is saved automatically and restored on next launch
 - **Always-on-Top Pin** - Pin the settings window above other windows when needed
-- **Reset Settings** - Restore all settings to defaults in one click
-- **Discord** - Quick link to the community Discord from within the app
 
 ---
 
