@@ -134,6 +134,7 @@ class MainWindow(QWidget):
         self._build_crosshair_card(bl)
         self._build_color_card(bl)
         self._build_visibility_card(bl)
+        self._build_resolution_card(bl)
         self._build_zoom_card(bl)
         self._build_profiles_card(bl)
         self._build_links_card(bl)
@@ -150,7 +151,7 @@ class MainWindow(QWidget):
         footer.setContentsMargins(10, 4, 10, 5)
         lc = QLabel("Made with \u2665 by moris and tim")
         lc.setStyleSheet(f"font-family:{FONT}; font-size:10px; color:#3a3f4d;")
-        lv = QLabel("v2.1.0")
+        lv = QLabel("v2.1.1")
         lv.setStyleSheet(f"font-family:{FONT}; font-size:10px; color:#3a3f4d;")
         footer.addWidget(lc)
         footer.addStretch()
@@ -416,6 +417,26 @@ class MainWindow(QWidget):
         rc_row = self._toggle_row("Hide on right-click", self._sw_rc)
         rc_row.addWidget(self._dd_rc_mode)
         cl.addLayout(rc_row)
+
+        parent.addWidget(card)
+
+    def _build_resolution_card(self, parent: QVBoxLayout) -> None:
+        card = self._card()
+        cl = QVBoxLayout(card)
+        cl.setContentsMargins(12, 10, 12, 10)
+        cl.setSpacing(7)
+        cl.addWidget(self._cap("RESOLUTION"))
+
+        self._dd_resolution = CustomDropdown(
+            [("16:9",  "16:9"),
+             ("16:10", "16:10"),
+             ("4:3",   "4:3"),
+             ("5:4",   "5:4")],
+            self._s.get("resolution", "16:9"),
+        )
+        self._dd_resolution.setFixedWidth(65)
+        self._dd_resolution.option_selected.connect(lambda v: self._set("resolution", v))
+        cl.addLayout(self._row("Aspect ratio", self._dd_resolution))
 
         parent.addWidget(card)
 
@@ -720,6 +741,8 @@ class MainWindow(QWidget):
         self._btn_toggle_key.set_key(s.get("toggle_hotkey", ""))
         self._sw_rc.blockSignals(True);      self._sw_rc.setChecked(s.get("right_click_hide", True), animate=False);  self._sw_rc.blockSignals(False)
         self._dd_rc_mode.set_value(s.get("right_click_mode", "hold"))
+
+        self._dd_resolution.set_value(s.get("resolution", "16:9"))
 
         self._sw_zoom.blockSignals(True);    self._sw_zoom.setChecked(s.get("zoom_enabled", True), animate=False);    self._sw_zoom.blockSignals(False)
         self._btn_zoom_key.set_key(s.get("zoom_hotkey", "c"))

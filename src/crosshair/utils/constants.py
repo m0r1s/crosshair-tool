@@ -22,7 +22,7 @@ import sys
 from dataclasses import dataclass
 
 APP_NAME    = "moris crosshair tool"
-APP_VERSION = "2.1.0"
+APP_VERSION = "2.1.1"
 
 REG_PATH          = r"Software\moris\crosshair_tool"
 REG_PROFILES_PATH = r"Software\moris\crosshair_tool\profiles"
@@ -67,6 +67,7 @@ DEFAULT_SETTINGS: dict = {
     "zoom_anchor":       "middle",
     "zoom_x":            0,
     "zoom_y":            0,
+    "resolution":        "16:9",
 }
 
 @dataclass(frozen=True)

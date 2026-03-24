@@ -345,17 +345,25 @@ class CrosshairPreview(QWidget):
         de = s.get("dot_enabled", False)
         ds = max(1, int(s.get("dot_size", 3) * sc))
 
+        _AR = {"16:9": 16/9, "4:3": 4/3, "5:4": 5/4, "16:10": 16/10}
+        _res_ar = _AR.get(s.get("resolution", "16:9"), 16/9)
+        hs = (16/9) / _res_ar
+        h_thick  = max(1, round(thick  * hs))
+        h_gap    = max(0, round(gap    * hs))
+        h_length = max(1, round(length * hs))
+
         def draw(x: int, y: int, w: int, h: int) -> None:
             if oe:
                 p.fillRect(x - ot, y - ot, w + ot * 2, h + ot * 2, oc)
             p.fillRect(x, y, w, h, color)
 
-        if s.get("line_top",    True): draw(cx - thick//2, cy - gap - length, thick, length)
-        if s.get("line_bottom", True): draw(cx - thick//2, cy + gap,          thick, length)
-        if s.get("line_left",   True): draw(cx - gap - length, cy - thick//2, length, thick)
-        if s.get("line_right",  True): draw(cx + gap,          cy - thick//2, length, thick)
+        if s.get("line_top",    True): draw(cx - h_thick//2, cy - gap - length,    h_thick, length)
+        if s.get("line_bottom", True): draw(cx - h_thick//2, cy + gap,             h_thick, length)
+        if s.get("line_left",   True): draw(cx - h_gap - h_length, cy - thick//2, h_length, thick)
+        if s.get("line_right",  True): draw(cx + h_gap,             cy - thick//2, h_length, thick)
         if de:
-            draw(cx - ds//2, cy - ds//2, ds, ds)
+            dw = max(1, round(ds * hs))
+            draw(cx - dw//2, cy - ds//2, dw, ds)
         p.end()
 
 

@@ -124,22 +124,29 @@ class CrosshairOverlay(QWidget):
         line_left   = s.get("line_left",   True)
         line_right  = s.get("line_right",  True)
 
+        _AR = {"16:9": 16/9, "4:3": 4/3, "5:4": 5/4, "16:10": 16/10}
+        _res_ar = _AR.get(s.get("resolution", "16:9"), 16/9)
+        h_scale = (16/9) / _res_ar
+        h_thick  = max(1, round(thick  * h_scale))
+        h_gap    = max(0, round(gap    * h_scale))
+        h_length = max(1, round(length * h_scale))
+
         def draw_rect(x: int, y: int, w: int, h: int) -> None:
             if outline_en:
                 painter.fillRect(x - ot, y - ot, w + ot * 2, h + ot * 2, outline_color)
             painter.fillRect(x, y, w, h, color)
 
         if line_top:
-            draw_rect(cx - thick // 2, cy - gap - length, thick, length)
+            draw_rect(cx - h_thick // 2, cy - gap - length, h_thick, length)
         if line_bottom:
-            draw_rect(cx - thick // 2, cy + gap,          thick, length)
+            draw_rect(cx - h_thick // 2, cy + gap,          h_thick, length)
         if line_left:
-            draw_rect(cx - gap - length, cy - thick // 2, length, thick)
+            draw_rect(cx - h_gap - h_length, cy - thick // 2, h_length, thick)
         if line_right:
-            draw_rect(cx + gap,          cy - thick // 2, length, thick)
+            draw_rect(cx + h_gap,            cy - thick // 2, h_length, thick)
 
         if dot_en:
             ds = dot_size
-            draw_rect(cx - ds // 2, cy - ds // 2, ds, ds)
+            draw_rect(cx - round(ds * h_scale) // 2, cy - ds // 2, round(ds * h_scale), ds)
 
         painter.end()
