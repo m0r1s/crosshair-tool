@@ -43,7 +43,7 @@ python -m crosshair
 
 ### Option 2: Windows Standalone (.exe)
 
-Download the latest release from the [Releases](https://github.com/m0r1s/crosshair/releases) page and run the `.exe` - no Python required.
+Download the latest release from the [Releases](https://github.com/m0r1s/crosshair-tool/releases) page and run the `.exe` - no Python required.
 
 ### Troubleshooting Installation
 
