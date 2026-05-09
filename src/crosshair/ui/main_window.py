@@ -47,7 +47,7 @@ from PySide6.QtWidgets import (
 
 from ..hotkeys import HotkeyManager
 from ..overlay import CrosshairOverlay
-from ..utils.constants import APP_NAME, APP_VERSION, COLOR_PRESETS, FONT
+from ..utils.constants import APP_VERSION, COLOR_PRESETS, FONT
 from ..utils.settings import export_profile, import_profile, save_settings
 from ..zoom_overlay import ZoomOverlay
 from .widgets import (
@@ -97,16 +97,24 @@ class MainWindow(QWidget):
         root = QVBoxLayout(self)
         root.setContentsMargins(10, 10, 10, 10)
 
-        container = QWidget()
-        container.setObjectName("mainContainer")
-        container.setAttribute(Qt.WidgetAttribute.WA_StyledBackground, True)
-
         shadow = QGraphicsDropShadowEffect()
         shadow.setBlurRadius(40)
         shadow.setColor(QColor(0, 0, 0, 200))
         shadow.setOffset(0, 10)
-        container.setGraphicsEffect(shadow)
-        root.addWidget(container)
+        border = QWidget()
+        border.setObjectName("windowBorder")
+        border.setAttribute(Qt.WidgetAttribute.WA_StyledBackground, True)
+        border.setGraphicsEffect(shadow)
+        root.addWidget(border)
+
+        border_layout = QVBoxLayout(border)
+        border_layout.setContentsMargins(1, 1, 1, 1)
+        border_layout.setSpacing(0)
+
+        container = QWidget()
+        container.setObjectName("mainContainer")
+        container.setAttribute(Qt.WidgetAttribute.WA_StyledBackground, True)
+        border_layout.addWidget(container)
 
         vbox = QVBoxLayout(container)
         vbox.setContentsMargins(0, 0, 0, 0)

@@ -186,9 +186,7 @@ class TitleBar(QWidget):
         lo.addWidget(logo_lbl)
         lo.addSpacing(4)
 
-        title = QLabel(
-            f"moris<span style='color:#89dfff;'>.software</span> / crosshair tool")
-        title.setTextFormat(Qt.TextFormat.RichText)
+        title = QLabel("crosshair tool")
         title.setStyleSheet(
             f"font-family: {FONT}; font-size:11px; font-weight:700; color:#eef0f5;")
         title.setAttribute(Qt.WidgetAttribute.WA_TransparentForMouseEvents, True)

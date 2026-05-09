@@ -21,7 +21,7 @@ For support: https://discord.gg/2fraBuhe3m
 import sys
 from dataclasses import dataclass
 
-APP_NAME    = "moris crosshair tool"
+APP_NAME    = "crosshair tool"
 APP_VERSION = "2.1.1"
 
 REG_PATH          = r"Software\moris\crosshair_tool"
